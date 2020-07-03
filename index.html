@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatApp</title>
+    <style>
+        *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    
+    
+    
+    body{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        
+    }
+    
+    .chatbox{
+        width: 800px;
+        border: 2px solid black;
+    }
+
+    .header{
+        padding:20px;
+        border: 2px solid black;
+        display: flex;
+        align-items: center;
+    }
+    .messagearea{
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        height: 400px;
+        
+    }
+    #textarea{
+        width: 100%;
+    }
+
+    .message{
+        padding: 20px;
+        max-width: 200px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    .outgoing{
+        margin-left:auto;
+    }
+    </style>
+</head>
+<body>
+    <div class="chatbox">
+        <div class="header">
+            <h1>Whatsup</h1>
+        </div>
+        <div class="messagearea"></div>
+        <div class="textarea">
+            <textarea  id="textarea" cols="30" rows="1" placeholder="Write message"></textarea>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/client.js"></script>
+</body>
+</html>
