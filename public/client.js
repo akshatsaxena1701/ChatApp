@@ -1,47 +1,56 @@
-const socket = io();
+const socket = io()
 let name;
-let textarea=document.querySelector('#textarea');
-let messagearea = document.querySelector('.messagearea');
+let textarea = document.querySelector('#textarea')
+let messageArea = document.querySelector('.message__area')
+do {
+    name = prompt('Please enter your name: ')
+} while(!name)
+let pass="";
 
-do{
-name=prompt('please enter your name');
-}while(!name)
-
-textarea.addEventListener('keyup',(e)=>{
-    if(e.key==='Enter')
-    sendmessage(e.target.value);
-})
-
-function sendmessage(message){
-    let msg={
-        user:name,
-        message:message
-    }
-
-    appendmessage(msg,'outgoing');
-    socket.emit('message',msg);
-    scrolltobottom();
+while(pass!="saxena9530"){
+    pass=prompt('Please enter room password');
 }
 
-function appendmessage(msg,type){
-    let div=document.createElement('div');
-    let classname=type;
-    div.classList.add(classname,'message');
+textarea.addEventListener('keyup', (e) => {
+    if(e.key === 'Enter') {
+        sendMessage(e.target.value)
+    }
+})
+
+function sendMessage(message) {
+    let msg = {
+        user: name,
+        message: message.trim()
+    }
+    // Append 
+    appendMessage(msg, 'outgoing')
+    textarea.value = ''
+    scrollToBottom()
+
+    // Send to server 
+    socket.emit('message', msg)
+
+}
+
+function appendMessage(msg, type) {
+    let mainDiv = document.createElement('div')
+    let className = type
+    mainDiv.classList.add(className, 'message')
 
     let markup = `
-    <p>${msg.user}</p>
-    <p>${msg.message}</p>
+        <h4>${msg.user}</h4>
+        <p>${msg.message}</p>
     `
-    div.innerHTML = markup;
-    messagearea.appendChild(div);
-    textarea.value='';
+    mainDiv.innerHTML = markup
+    messageArea.appendChild(mainDiv)
 }
 
-socket.on('message',(msg)=>{
-    appendmessage(msg,'incoming')
-    scrolltobottom();
+// Recieve messages 
+socket.on('message', (msg) => {
+    appendMessage(msg, 'incoming')
+    scrollToBottom()
 })
 
-function scrolltobottom(){
-    messagearea.scrollTop=messagearea.scrollHeight;
+function scrollToBottom() {
+    messageArea.scrollTop = messageArea.scrollHeight
 }
